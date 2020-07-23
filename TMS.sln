@@ -4,6 +4,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FDF63FD8-CB1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMS.Tickets", "src\TMS.Tickets\TMS.Tickets.csproj", "{794FB19D-9796-4078-8BA8-81029D14A348}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMS.Web", "src\TMS.Web\TMS.Web.csproj", "{BE404635-282F-4D72-9F79-2C96060D3910}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,8 +16,13 @@ Global
 		{794FB19D-9796-4078-8BA8-81029D14A348}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{794FB19D-9796-4078-8BA8-81029D14A348}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{794FB19D-9796-4078-8BA8-81029D14A348}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE404635-282F-4D72-9F79-2C96060D3910}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE404635-282F-4D72-9F79-2C96060D3910}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE404635-282F-4D72-9F79-2C96060D3910}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE404635-282F-4D72-9F79-2C96060D3910}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{794FB19D-9796-4078-8BA8-81029D14A348} = {FDF63FD8-CB1A-4B22-8889-7D722E556C1C}
+		{BE404635-282F-4D72-9F79-2C96060D3910} = {FDF63FD8-CB1A-4B22-8889-7D722E556C1C}
 	EndGlobalSection
 EndGlobal
