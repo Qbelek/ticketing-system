@@ -4,14 +4,12 @@ namespace TMS.Tickets.Application.Models
 {
     internal class Ticket
     {
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public User Issuer { get; set; }
-        public User Assignee { get; set; }
-        public TicketState State { get; set; }
-        public DateTimeOffset CreationDate { get; set; }
-        public DateTimeOffset LastModificationDate { get; set; }
-        public bool IsDeleted { get; set; }
-        public DateTimeOffset DeletionDate { get; set; }
+        public string Title { get; }
+        public string Description { get; }
+        public User Issuer { get; }
+        public User Assignee { get; }
+        public TicketState State { get; }
+        public DateTimeOffset CreationDate { get; }
+        public DateTimeOffset LastModificationDate { get; }
     }
 }
