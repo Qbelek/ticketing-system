@@ -10,12 +10,16 @@ namespace TMS.Web.Api
 {
     public class BaseController : ControllerBase
     {
+        protected const string InvalidGuidMessage = "It is not a correct GUID. " +
+                                                    "Please provide GUID in the following format: " +
+                                                    "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
+        
+        protected readonly IMediator Mediator;
+        
         public BaseController(IMediator mediator)
         {
             Mediator = mediator;
         }
-
-        protected readonly IMediator Mediator;
 
         /// <summary>
         /// Processes response and returns appropriate HTTP code
@@ -50,7 +54,8 @@ namespace TMS.Web.Api
                 "DELETE" => NoContent(),
                 "PUT" => Ok(data),
                 "PATCH" => Ok(data),
-                "HEAD" => Ok()
+                "HEAD" => Ok(),
+                _ => Ok()
             };
         }
         
