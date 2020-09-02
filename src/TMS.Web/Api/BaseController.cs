@@ -1,5 +1,3 @@
-using System;
-using System.Runtime.CompilerServices;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TMS.Shared;
@@ -13,60 +11,63 @@ namespace TMS.Web.Api
         protected const string InvalidGuidMessage = "It is not a correct GUID. " +
                                                     "Please provide GUID in the following format: " +
                                                     "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
-        
+
+        protected readonly MachineDateTime _mdt;
+
         protected readonly IMediator Mediator;
-        
-        public BaseController(IMediator mediator)
+
+        public BaseController(IMediator mediator, MachineDateTime mdt)
         {
             Mediator = mediator;
+            _mdt = mdt;
         }
 
         /// <summary>
-        /// Processes response and returns appropriate HTTP code
+        ///     Processes response and returns appropriate HTTP code
         /// </summary>
         /// <remarks>
-        /// If response is valid and actionOnSuccess is not specified, the method returns by default:
-        /// 200 - for GET requests,
-        /// 201 - for POST requests,
-        /// 204 - for DELETE requests,
-        /// 200 - for PUT requests,
-        /// 200 - for PATCH requests,
-        /// 200 - for HEAD requests (headers only)
+        ///     If response is valid and actionOnSuccess is not specified, the method returns by default:
+        ///     200 - for GET requests,
+        ///     201 - for POST requests,
+        ///     204 - for DELETE requests,
+        ///     200 - for PUT requests,
+        ///     200 - for PATCH requests,
+        ///     200 - for HEAD requests (headers only)
         /// </remarks>
         /// <param name="response"></param>
         /// <param name="actionOnSuccess"></param>
         /// <returns>IActionResult</returns>
-        protected IActionResult ProcessResponse<T>(Response<T> response, IActionResult actionOnSuccess = null) 
+        protected IActionResult ProcessResponse<T>(Response<T> response, IActionResult actionOnSuccess = null)
             where T : BaseDTO
         {
-            if (!response.IsValid) 
-                return ReturnError(response.Error);
+            if (!response.IsValid)
+                return ReturnError(response);
 
-            return actionOnSuccess ?? ReturnData(response.Value);
+            return actionOnSuccess ?? ReturnData(response);
         }
 
-        private IActionResult ReturnData(BaseDTO data)
+        private IActionResult ReturnData<T>(Response<T> response) where T : BaseDTO
         {
-            return this.Request.Method switch
+            return Request.Method switch
             {
-                "GET" => Ok(data),
-                "POST" => Created($"{Request.Path}/{data.Id}", data),
+                "GET" => Ok(response),
+                "POST" => Created($"{Request.Path}/{response.Data.Id}", response),
                 "DELETE" => NoContent(),
-                "PUT" => Ok(data),
-                "PATCH" => Ok(data),
+                "PUT" => Ok(response),
+                "PATCH" => Ok(response),
                 "HEAD" => Ok(),
                 _ => Ok()
             };
         }
-        
-        private IActionResult ReturnError(Error error)
+
+        private IActionResult ReturnError<T>(Response<T> response) where T : BaseDTO
         {
-            return error.GetType().Name switch
+            return response.Error.GetType().Name switch
             {
-                nameof(BadRequestError) => BadRequest(error),
-                nameof(NotFoundError) => NotFound(error),
-                nameof(ConflictError) => Conflict(error),
-                _ => BadRequest(error)
+                nameof(BadRequestError) => BadRequest(response),
+                nameof(NotFoundError) => NotFound(response),
+                nameof(ConflictError) => Conflict(response),
+                _ => BadRequest(response)
             };
         }
     }
