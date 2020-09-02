@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace TMS.Tickets.Application.Models
 {
     internal class User

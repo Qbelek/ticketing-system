@@ -2,6 +2,9 @@ namespace TMS.Tickets.Application.Models
 {
     internal enum TicketState
     {
-        Created, Assigned, Completed, Cancelled
+        Created,
+        Assigned,
+        Completed,
+        Cancelled
     }
 }

@@ -2,7 +2,7 @@ namespace TMS.Shared.ApiErrors
 {
     public abstract class Error
     {
-        protected Error(int statusCode, string statusDescription, string message="")
+        protected Error(int statusCode, string statusDescription, string message = "")
         {
             StatusCode = statusCode;
             StatusDescription = statusDescription;

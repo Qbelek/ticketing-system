@@ -6,6 +6,7 @@ namespace TMS.Shared.ApiErrors
     {
         public NotFoundError(string message)
             : base(404, HttpStatusCode.NotFound.ToString(), message)
-        { }
+        {
+        }
     }
 }
