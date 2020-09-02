@@ -6,11 +6,17 @@
 
     <ItemGroup>
       <ProjectReference Include="..\TMS.Shared\TMS.Shared.csproj" />
+      <ProjectReference Include="..\TMS.Tickets.Integration\TMS.Tickets.Integration.csproj" />
+      <ProjectReference Include="..\TMS.Tickets\TMS.Tickets.csproj" />
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="10.0.0" />
+      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
       <PackageReference Include="MediatR" Version="8.0.1" />
       <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.7" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.7" />
     </ItemGroup>
 
 
