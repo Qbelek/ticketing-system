@@ -34,7 +34,7 @@ namespace TMS.Web.Api
 
             if (!id.HasValue)
             {
-                response = new Response<TicketDTO>(new BadRequestError(InvalidGuidMessage), _mdt);
+                response = new Response<TicketDTO>(new BadRequestError(InvalidGuidMessage), Mdt);
                 return ProcessResponse(response);
             }
 

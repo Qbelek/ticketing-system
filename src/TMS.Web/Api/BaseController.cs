@@ -12,20 +12,17 @@ namespace TMS.Web.Api
                                                     "Please provide GUID in the following format: " +
                                                     "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
 
-        protected readonly MachineDateTime _mdt;
+        protected readonly MachineDateTime Mdt;
 
         protected readonly IMediator Mediator;
 
         public BaseController(IMediator mediator, MachineDateTime mdt)
         {
             Mediator = mediator;
-            _mdt = mdt;
+            Mdt = mdt;
         }
-
-        /// <summary>
+        
         ///     Processes response and returns appropriate HTTP code
-        /// </summary>
-        /// <remarks>
         ///     If response is valid and actionOnSuccess is not specified, the method returns by default:
         ///     200 - for GET requests,
         ///     201 - for POST requests,
@@ -33,10 +30,6 @@ namespace TMS.Web.Api
         ///     200 - for PUT requests,
         ///     200 - for PATCH requests,
         ///     200 - for HEAD requests (headers only)
-        /// </remarks>
-        /// <param name="response"></param>
-        /// <param name="actionOnSuccess"></param>
-        /// <returns>IActionResult</returns>
         protected IActionResult ProcessResponse<T>(Response<T> response, IActionResult actionOnSuccess = null)
             where T : BaseDTO
         {
