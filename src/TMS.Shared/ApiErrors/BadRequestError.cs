@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Net;
 
 namespace TMS.Shared.ApiErrors
@@ -6,7 +7,10 @@ namespace TMS.Shared.ApiErrors
     {
         public BadRequestError(string message)
             : base(400, HttpStatusCode.BadRequest.ToString(), message)
-        {
-        }
+        { }
+        
+        public BadRequestError(List<string> messages)
+            : base(400, HttpStatusCode.BadRequest.ToString(), messages)
+        { }
     }
 }

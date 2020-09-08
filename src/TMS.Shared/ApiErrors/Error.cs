@@ -1,18 +1,28 @@
+using System.Collections.Generic;
+
 namespace TMS.Shared.ApiErrors
 {
     public abstract class Error
     {
-        protected Error(int statusCode, string statusDescription, string message = "")
+        protected Error(int statusCode, string statusDescription, string message)
         {
             StatusCode = statusCode;
             StatusDescription = statusDescription;
-            Message = message;
+            Messages = new List<string>();
+            Messages.Add(message);
+        }
+
+        protected Error(int statusCode, string statusDescription, List<string> messages)
+        {
+            StatusCode = statusCode;
+            StatusDescription = statusDescription;
+            Messages = messages;
         }
 
         public int StatusCode { get; }
 
         public string StatusDescription { get; }
 
-        public string Message { get; }
+        public List<string> Messages { get; }
     }
 }
