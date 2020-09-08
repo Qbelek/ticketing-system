@@ -1,4 +1,5 @@
 using AutoMapper;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,9 +9,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TMS.Shared;
 using TMS.Tickets.Application.Handlers;
+using TMS.Tickets.Application.Validators;
 using TMS.Tickets.Config;
 using TMS.Tickets.Integration.Queries;
 using TMS.Tickets.Persistence;
+using TMS.Web.Config;
+using TMS.Web.Filters;
 
 namespace TMS.Web
 {
@@ -34,7 +38,15 @@ namespace TMS.Web
                 typeof(GetTicketQueryHandler).Assembly);
 
             services.AddAutoMapper(
-                typeof(AutomapperTicketsProfile).Assembly);
+                typeof(AutomapperTicketsProfile).Assembly,
+                typeof(AutomapperApiProfile).Assembly);
+
+            services.AddValidatorsFromAssembly(
+                typeof(CreateTicketCommandValidator).Assembly);
+
+            ValidatorOptions.Global.LanguageManager.Enabled = false;
+
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(HandlerValidationPipeline<,>));
 
             RegisterServices(services);
 
@@ -57,10 +69,7 @@ namespace TMS.Web
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
 
         private void RegisterServices(IServiceCollection services)
