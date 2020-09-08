@@ -1,17 +1,16 @@
 ﻿using System;
 using MediatR;
 using TMS.Shared;
-using TMS.Shared.DTO;
 
 namespace TMS.Tickets.Integration.Queries
 {
-    public class GetTicketQuery : IRequest<Response<TicketDTO>>
+    public class GetTicketQuery : IRequest<Response>
     {
-        public GetTicketQuery(Guid id)
+        public GetTicketQuery(Guid ticketId)
         {
-            Id = id;
+            TicketId = ticketId;
         }
 
-        public Guid Id { get; }
+        public Guid TicketId { get; }
     }
 }

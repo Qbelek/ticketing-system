@@ -5,9 +5,9 @@ using TMS.Shared.DTO;
 
 namespace TMS.Shared
 {
-    public class Response<T> where T : BaseDTO
+    public class Response
     {
-        public Response(T data, MachineDateTime mdt)
+        public Response(BaseDTO data, MachineDateTime mdt)
         {
             Data = data;
             IsValid = true;
@@ -20,7 +20,7 @@ namespace TMS.Shared
             Timestamp = mdt.Now();
         }
 
-        public T Data { get; }
+        public BaseDTO Data { get; }
         public Error Error { get; }
 
         [JsonIgnore] public bool IsValid { get; }

@@ -13,7 +13,7 @@ using TMS.Tickets.Persistence;
 
 namespace TMS.Tickets.Application.Handlers
 {
-    public class GetTicketQueryHandler : IRequestHandler<GetTicketQuery, Response<TicketDTO>>
+    public class GetTicketQueryHandler : IRequestHandler<GetTicketQuery, Response>
     {
         private readonly TicketsDbContext _dbContext;
         private readonly IMapper _mapper;
@@ -26,17 +26,17 @@ namespace TMS.Tickets.Application.Handlers
             _mdt = mdt;
         }
 
-        public async Task<Response<TicketDTO>> Handle(GetTicketQuery request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(GetTicketQuery request, CancellationToken cancellationToken)
         {
             var ticket = await _dbContext.Tickets
-                .Where(x => x.Id == request.Id)
+                .Where(x => x.Id == request.TicketId)
                 .ProjectTo<TicketDTO>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync(cancellationToken);
 
             if (ticket == null)
-                return new Response<TicketDTO>(new NotFoundError("Ticket with this ID does not exist"), _mdt);
+                return new Response(new NotFoundError("Ticket with this ID does not exist"), _mdt);
 
-            return new Response<TicketDTO>(ticket, _mdt);
+            return new Response(ticket, _mdt);
         }
     }
 }

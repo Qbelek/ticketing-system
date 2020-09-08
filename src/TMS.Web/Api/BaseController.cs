@@ -1,8 +1,8 @@
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TMS.Shared;
 using TMS.Shared.ApiErrors;
-using TMS.Shared.DTO;
 
 namespace TMS.Web.Api
 {
@@ -12,26 +12,27 @@ namespace TMS.Web.Api
                                                     "Please provide GUID in the following format: " +
                                                     "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
 
-        protected readonly MachineDateTime Mdt;
+        protected readonly IMapper Mapper;
 
+        protected readonly MachineDateTime Mdt;
         protected readonly IMediator Mediator;
 
-        public BaseController(IMediator mediator, MachineDateTime mdt)
+        public BaseController(IMediator mediator, IMapper mapper, MachineDateTime mdt)
         {
             Mediator = mediator;
+            Mapper = mapper;
             Mdt = mdt;
         }
-        
-        ///     Processes response and returns appropriate HTTP code
-        ///     If response is valid and actionOnSuccess is not specified, the method returns by default:
-        ///     200 - for GET requests,
-        ///     201 - for POST requests,
-        ///     204 - for DELETE requests,
-        ///     200 - for PUT requests,
-        ///     200 - for PATCH requests,
-        ///     200 - for HEAD requests (headers only)
-        protected IActionResult ProcessResponse<T>(Response<T> response, IActionResult actionOnSuccess = null)
-            where T : BaseDTO
+
+        /// Processes response and returns appropriate HTTP code
+        /// If response is valid and actionOnSuccess is not specified, the method returns by default:
+        /// 200 - for GET requests,
+        /// 201 - for POST requests,
+        /// 204 - for DELETE requests,
+        /// 200 - for PUT requests,
+        /// 200 - for PATCH requests,
+        /// 200 - for HEAD requests (headers only)
+        protected IActionResult ProcessResponse(Response response, IActionResult actionOnSuccess = null)
         {
             if (!response.IsValid)
                 return ReturnError(response);
@@ -39,7 +40,7 @@ namespace TMS.Web.Api
             return actionOnSuccess ?? ReturnData(response);
         }
 
-        private IActionResult ReturnData<T>(Response<T> response) where T : BaseDTO
+        private IActionResult ReturnData(Response response)
         {
             return Request.Method switch
             {
@@ -53,7 +54,7 @@ namespace TMS.Web.Api
             };
         }
 
-        private IActionResult ReturnError<T>(Response<T> response) where T : BaseDTO
+        private IActionResult ReturnError(Response response)
         {
             return response.Error.GetType().Name switch
             {
